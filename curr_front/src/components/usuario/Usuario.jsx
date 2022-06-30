@@ -11,6 +11,8 @@ const headerProps = {
 const initialUrl = 'http://localhost:3000/api/usuarios/';
 const actionUrl = 'http://localhost:3000/api/usuario/';
 
+var passouLoad = 'nao';
+
 export default class Usuario extends React.Component {
 
   constructor() { 
@@ -35,17 +37,27 @@ export default class Usuario extends React.Component {
     return list;  
   }  
 
-  saveOrUpdate = () => {
+  saveOrUpdate = (e) => {
     const usuario = this.state.usuario;
-    const method = usuario.login ? 'put' : 'post';
-    const url = usuario.login ? `${actionUrl}${usuario.login}` : actionUrl;
 
-    console.log(method, url)
+    let method;
+
+    if (passouLoad === 'sim') {
+      method = 'put';
+      passouLoad = 'nao';
+    } else {
+      method = 'post';
+    }
+    
+    const url = method === 'put' ? `${actionUrl}${usuario.login}` : actionUrl;
 
     axios[method](url, usuario).then(resp => {
-      const list = this.getUpdatedList(resp.data);
-      setTimeout(this.setState({ usuario: this.state.usuario, list }));
-    });
+      let { login, senha, nome } = (method === 'put') ? resp.data : resp.data.result;
+      let resultado = { login, senha, nome }; 
+
+      const list = this.getUpdatedList(resultado);
+      setTimeout(this.setState({ usuario: this.state.usuario, list }), 2500);
+    }); 
   }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   delete = usuario => {
@@ -55,7 +67,11 @@ export default class Usuario extends React.Component {
     });
   }
 
-  load = usuario => { this.setState({ usuario }); }
+  load = usuario => { 
+    this.setState({ usuario }); 
+
+    passouLoad = 'sim';
+  }
 
   clear = () => { this.setState({ usuario: this.state.usuario }); }
 
@@ -108,7 +124,7 @@ export default class Usuario extends React.Component {
 
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
-            <button type="submit" onClick={ e => this.saveOrUpdate(e) } className="btn btn-primary">
+            <button id="salvar" type="submit" onClick={ e => this.saveOrUpdate(e) } className="btn btn-primary" ref="refSalvar">
               Salvar
             </button>
             <button type="submit" onClick={ e => this.clear(e) } className="btn btn-secondary ml-2">
