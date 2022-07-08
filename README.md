@@ -8,9 +8,7 @@
 ## npm install axios
 ## npm install dotenv
 
-# optei por usar o sgbd mysql por problemas de conexao com postgres, os scripts estao em ./src/dump (somente uma tab, pois só uma funcionalidade está cumprida até o presente momento)
+# Scripts estao em ./src/dump 
 
 ## Inicie o servidor com o comando npm start na raiz do projeto (carteira_dig)
 
-## sudo mysql
-## ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'P@ssw0rd';
