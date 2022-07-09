@@ -10,6 +10,3 @@
 ## npm install dotenv
 
 ## Rode o "Front" com o comando npm start no diretório ./carteira_dig/curr_front
-
-## Observações:
-### O layout dos botoes da tabela estao quebrando e a funcionalida de INSERT pela tela precisa de um ajuste, as demais telas serão construídas (e as relações no BD) com a finalização destes dois bugs, o font awesome n foi instalado apesar de constar na escrita.
